@@ -66,7 +66,7 @@ std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angol
 
   Coordinata coordinata_evoluta;
 
-  for (int n = 1; n < nsteps; n++)
+  for (size_t n = 1; n < nsteps; n++)
   {
     coordinata_evoluta.x = coordinate_evolute.at(n - 1).x + 0;
     coordinata_evoluta.y = coordinate_evolute.at(n - 1).y + 0;
@@ -94,8 +94,8 @@ int main(void)
 
   std::vector<Coordinata> coordinate_evolute = euler(coordinata, u, dt, nsteps);
 
-  for (auto &i : coordinate_evolute)
-    std::cout << i.x << "\t" << i.y << "\t" << i.R << std::endl;
+  for (size_t i = 0; i < coordinate_evolute.size(); i++)
+    std::cout << coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R << std::endl;
 
   return 0;
 }
