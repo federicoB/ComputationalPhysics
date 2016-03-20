@@ -3,14 +3,15 @@
 #include <fstream>
 #include <cmath>
 #include <iostream>
+#include "integratore.h"
 
 
 double f(const double &x) {
     return sin(x);
 }
 
-double rettangoli(double a, double b, int N) //integra f in [a,b] con N rettangoli
-{
+
+double rettangoli(double a, double b, int N) {
     double sum = 0.0;
     double dx = (b - a) / N;
 
@@ -21,6 +22,7 @@ double rettangoli(double a, double b, int N) //integra f in [a,b] con N rettango
 
     return sum;
 }
+
 
 double trapezi(double a, double b, int N) {
     double sum = 0.0;
