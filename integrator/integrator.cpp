@@ -3,7 +3,7 @@
 #include <fstream>
 #include <cmath>
 #include <iostream>
-#include "integratore.h"
+#include "integrator.h"
 
 
 double f(const double &x) {

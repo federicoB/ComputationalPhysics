@@ -2,8 +2,8 @@
 // Created by fede on 20/03/16.
 //
 
-#ifndef INTEGRATORE_INTEGRATORE_H
-#define INTEGRATORE_INTEGRATORE_H
+#ifndef INTEGRATOR_H
+#define INTEGRATOR_H
 
 /**
  * The function to integrate
@@ -20,4 +20,4 @@ double trapezoidal(double leftExtreme, double rightExtreme, int numberOfSegments
 
 double simpson(double a, double b, int N);
 
-#endif //INTEGRATORE_INTEGRATORE_H
+#endif //INTEGRATOR_H
