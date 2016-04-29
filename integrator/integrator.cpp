@@ -50,9 +50,24 @@ double trapezoidal(double leftExtreme, double rightExtreme, int numberOfSegments
     return sum;
 }
 
-double simpson(double a, double b, int N) {
-    //TODO implement simpson method
-    return 0.0;
+//reference https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson.27s_rule
+
+double simpson(double leftExtreme, double rightExtreme, int numberOfSegments) {
+    //declare a variable sum for containg the sum of the areas of the parabola
+    double sum = 0.0;
+    //determine the segmentLenght base subdividing the leght of the interval for the desired numberOfSegments
+    double segmentLeght = (rightExtreme - leftExtreme) / numberOfSegments;
+    bool even = false;
+    double point = leftExtreme;
+    //for all the numberOfSegments
+    for (int i = 1; i < numberOfSegments/2; i++) {
+        double point1 = leftExtreme + segmentLeght*((2*i)-2);
+        double point2 = leftExtreme + segmentLeght*((2*i)-1);
+        double point3 = leftExtreme + segmentLeght*((2*i));
+        sum += f(point1) + 4*f(point2)+f(point3);
+    }
+    sum = sum * (segmentLeght/3);
+    return sum;
 }
 
 int main() {
@@ -60,8 +75,8 @@ int main() {
     std::ofstream outputFile("outputFile.txt");
     //if the file is open
     if (outputFile.is_open()) {
-        //determine the real value of the sine on 1 (the cose is always complementary to it)
-        double truth = 1.0 - cos(1.0);
+        //determine the real value of definite integral of the sine from 0 to 1 with the antiderivative.
+        double truth = 1 - cos(1);
         //create a legend for the output file
         outputFile << "A   \t B\t\t\tC" << std::endl;
         //loop for varius number of segments
@@ -72,15 +87,15 @@ int main() {
             //set the output in scientific notation
             outputFile.setf(std::ios_base::scientific);
             //set the decimal precision to 2
-            outputFile.precision(2);
+            outputFile.precision(4);
             //print current number of segments
             outputFile << N << "   \t"
             //error with rectangle method
-            << rectangle(0.0, 1.0, N) - truth << "\t"
+            << rectangle(0, 1, N) - truth  << "\t"
             //error with trapezoidal method
-            << trapezoidal(0.0, 1.0, N) - truth << "\t"
+            << trapezoidal(0, 1, N) - truth << "\t"
             //error with simpson method
-            << simpson(0.0, 1.0, N) - truth << std::endl;
+            << simpson(0, 1, N)  - truth << std::endl;
         }
 
     }
