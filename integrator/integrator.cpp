@@ -10,8 +10,9 @@ double f(const double &x) {
     return sin(x);
 }
 
+//Reference for methods https://en.wikipedia.org/wiki/Numerical_integration#Quadrature_rules_based_on_interpolating_functions
 
-double rettangoli(double a, double b, int N) {
+double rectangle(double a, double b, int N) {
     double sum = 0.0;
     double dx = (b - a) / N;
 
@@ -24,7 +25,7 @@ double rettangoli(double a, double b, int N) {
 }
 
 
-double trapezi(double a, double b, int N) {
+double trapezoidal(double a, double b, int N) {
     double sum = 0.0;
     double dx = (b - a) / N;
 
@@ -47,12 +48,14 @@ int main() {
     std::ofstream outputFile("outputFile.txt");
     if (outputFile.is_open()) {
         double truth = 1.0 - cos(1.0);
-
+        outputFile << "A   \t B\t\t\tC" << std::endl;
         for (int n = 1; n < 100; n++) //calcolo degli integrali con varie discretizzazioni(segmenti)
         {
             int N = n * n; //numero di segmenti
-            outputFile << N << " " << rettangoli(0.0, 1.0, N) - truth /*errore con il metodo dei rettangoli*/ << " " <<
-            trapezi(0.0, 1.0, N) - truth << " " << simpson(0.0, 1.0, N) - truth << std::endl;
+            outputFile.setf(std::ios_base::scientific);
+            outputFile.precision(2);
+            outputFile << N << "   \t" << rectangle(0.0, 1.0, N) - truth /*errore con il metodo dei rectangle*/ << "\t" <<
+                    trapezoidal(0.0, 1.0, N) - truth << "\t" << simpson(0.0, 1.0, N) - truth << std::endl;
         }
 
     }
