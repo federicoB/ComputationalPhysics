@@ -68,10 +68,10 @@ std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angol
 
   for (size_t n = 1; n < nsteps; n++)
   {
-    coordinata_evoluta.x = coordinate_evolute.at(n - 1).x + 0;
-    coordinata_evoluta.y = coordinate_evolute.at(n - 1).y + 0;
-    coordinata_evoluta.R = sqrt(coordinata_evoluta.x*coordinata_evoluta.x + coordinata_evoluta.y*coordinata_evoluta.y);
-
+    coordinata_evoluta.x = coordinate_evolute.at(n - 1).x + 1;
+    coordinata_evoluta.y = coordinate_evolute.at(n - 1).y + 1;
+    coordinata_evoluta.R = sqrt(pow(coordinata.x,2) + pow(coordinata.y,2));
+    coordinate_evolute.push_back(coordinata_evoluta);
   }
   return coordinate_evolute;
 }
@@ -84,13 +84,14 @@ int main(void)
   Coordinata coordinata;
   size_t nsteps = 1000;
   double dt = 0.01;
+    //angular speed
   double u = 6.28;
 
   coordinata.x = 1.0;
   coordinata.y = 0;
   coordinata.v_x = 0;
   coordinata.v_y = 1.0;
-  coordinata.R = sqrt(coordinata.x*coordinata.x + coordinata.y*coordinata.y);
+  coordinata.R = sqrt(pow(coordinata.x,2) + pow(coordinata.y,2));
 
   std::vector<Coordinata> coordinate_evolute = euler(coordinata, u, dt, nsteps);
 
