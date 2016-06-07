@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include "../integrator/integrationMethods.h"
 
 
@@ -55,7 +56,7 @@ double dv_x_dt(const double &time) {
 }
 
 //function to calculate angular speed along y at a given time
-double dy_dt( const double &time) {
+double dy_dt(const double &time) {
     return angularSpeed * cos(angularSpeed * time);
 }
 
@@ -84,10 +85,10 @@ std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angol
     for (size_t n = 1; n < nsteps; n++) {
         double time2 = time + dt;
         Coordinata previusCoordinate = coordinate_evolute.at(n - 1);
-        coordinata_evoluta.x = previusCoordinate.x + rectangle(time,time2,100,speedFunctionX);
-        coordinata_evoluta.y = previusCoordinate.y + rectangle(time,time2,100,speedFunctionY);;
-        coordinata_evoluta.v_x = previusCoordinate.v_x + rectangle(time,time2,100,accellerationFunctionX);
-        coordinata_evoluta.v_y = previusCoordinate.v_y + rectangle(time,time2,100,accellerationFunctionY);
+        coordinata_evoluta.x = previusCoordinate.x + rectangle(time, time2, 1, speedFunctionX);
+        coordinata_evoluta.y = previusCoordinate.y + rectangle(time, time2, 1, speedFunctionY);;
+        coordinata_evoluta.v_x = previusCoordinate.v_x + rectangle(time, time2, 100, accellerationFunctionX);
+        coordinata_evoluta.v_y = previusCoordinate.v_y + rectangle(time, time2, 100, accellerationFunctionY);
         coordinata_evoluta.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
         coordinate_evolute.push_back(coordinata_evoluta);
         time = time2;
@@ -107,11 +108,19 @@ int main(void) {
     coordinata.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
 
     std::vector<Coordinata> coordinate_evolute = euler(coordinata, angularSpeed, dt, nsteps);
-    for (size_t i = 0; i < coordinate_evolute.size(); i++)
-        std::cout << std::setprecision(3) << std::scientific <<
-                coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R
-        << std::endl;
-
+    //create an output stream to a file
+    std::ofstream outputFile("traiettoria.txt");
+    if (outputFile.is_open()) {
+        //set the output in scientific notation
+        outputFile.setf(std::ios_base::scientific);
+        //set the decimal precision to 4
+        outputFile.precision(4);
+        for (size_t i = 0; i < coordinate_evolute.size(); i++)
+            outputFile <<
+            coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R
+            << std::endl;
+    }
+    outputFile.close();
     return 0;
 }
 
