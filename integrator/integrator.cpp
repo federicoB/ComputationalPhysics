@@ -32,7 +32,7 @@ int main() {
             int N = n * n;
             //set the output in scientific notation
             outputFile.setf(std::ios_base::scientific);
-            //set the decimal precision to 2
+            //set the decimal precision to 4
             outputFile.precision(4);
             //print current number of segments
             outputFile << N << "   \t"

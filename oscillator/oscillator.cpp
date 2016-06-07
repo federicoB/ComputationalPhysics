@@ -3,7 +3,8 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
-#include "../integrator/integrator.h"
+#include <iomanip>
+#include "../integrator/integrationMethods.h"
 
 
 /*
@@ -77,13 +78,16 @@ std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angol
     Coordinata coordinata_evoluta;
     double time = 0;
     double (*speedFunctionX)(const double &) = &dx_dt;
+    double (*speedFunctionY)(const double &) = &dy_dt;
+    double (*accellerationFunctionX)(const double &) = &dv_x_dt;
+    double (*accellerationFunctionY)(const double &) = dv_y_dt;
     for (size_t n = 1; n < nsteps; n++) {
         double time2 = time + dt;
         Coordinata previusCoordinate = coordinate_evolute.at(n - 1);
-        coordinata_evoluta.x = previusCoordinate.x + rectangle(time,time2,10,speedFunctionX);
-        coordinata_evoluta.y = previusCoordinate.y + 1;
-        coordinata_evoluta.v_x = previusCoordinate.v_x + 1;
-        coordinata_evoluta.v_y = previusCoordinate.v_y + 1;
+        coordinata_evoluta.x = previusCoordinate.x + rectangle(time,time2,100,speedFunctionX);
+        coordinata_evoluta.y = previusCoordinate.y + rectangle(time,time2,100,speedFunctionY);;
+        coordinata_evoluta.v_x = previusCoordinate.v_x + rectangle(time,time2,100,accellerationFunctionX);
+        coordinata_evoluta.v_y = previusCoordinate.v_y + rectangle(time,time2,100,accellerationFunctionY);
         coordinata_evoluta.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
         coordinate_evolute.push_back(coordinata_evoluta);
         time = time2;
@@ -96,7 +100,6 @@ int main(void) {
     Coordinata coordinata;
     size_t nsteps = 1000;
     double dt = 0.01;
-
     coordinata.x = 1.0;
     coordinata.y = 0;
     coordinata.v_x = 0;
@@ -104,10 +107,10 @@ int main(void) {
     coordinata.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
 
     std::vector<Coordinata> coordinate_evolute = euler(coordinata, angularSpeed, dt, nsteps);
-
     for (size_t i = 0; i < coordinate_evolute.size(); i++)
-        std::cout << coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R <<
-        std::endl;
+        std::cout << std::setprecision(3) << std::scientific <<
+                coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R
+        << std::endl;
 
     return 0;
 }
