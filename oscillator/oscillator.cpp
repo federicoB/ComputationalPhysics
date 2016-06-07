@@ -41,16 +41,28 @@ quanto piu` grande sara` il dt impostato nel problema)
 
 
 
-//#derivata nel tempo del punto dello spazio delle fasi X(t)=[x0,x1], oscillatore armonico
-double dx_dt(const double x0, const double x1) //derivata 
+//function to calculate angular speed along x at a given time
+double dx_dt(const double angularSpeed, const double time) //derivata
 {
-  return x1;
+    return -angularSpeed * sin(angularSpeed*time);
 }
 
-
-double dy_dt(const double y0, const double y1)
+//function to calculare angular acceleration along x at a given time
+double dv_x_dt(const double angularSpeed, const double time)
 {
-  return -y0;
+    return -pow(angularSpeed,2) * cos(angularSpeed*time);
+}
+
+//function to calculate angular speed along y at a given time
+double dy_dt(const double angularSpeed, const double time)
+{
+    return angularSpeed * cos(angularSpeed*time);
+}
+
+//function to calculate angular acceleration
+double dv_y_dt(const double angularSpeed, const double time)
+{
+    return -pow(angularSpeed,2) * sin(angularSpeed*time);
 }
 
 
