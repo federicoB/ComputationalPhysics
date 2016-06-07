@@ -3,7 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
-
+#include "../integrator/integrator.h"
 
 
 /*
@@ -38,79 +38,78 @@ e` un buon indicatore della qualita` del nostro integratore, vedremo infatti R a
 quanto piu` grande sara` il dt impostato nel problema)
 */
 
-
+//angular speed
+#define angularSpeed 6.28
 
 
 //function to calculate angular speed along x at a given time
-double dx_dt(const double angularSpeed, const double time) //derivata
+double dx_dt(const double &time) //derivata
 {
-    return -angularSpeed * sin(angularSpeed*time);
+    return -angularSpeed * sin(angularSpeed * time);
 }
 
 //function to calculare angular acceleration along x at a given time
-double dv_x_dt(const double angularSpeed, const double time)
-{
-    return -pow(angularSpeed,2) * cos(angularSpeed*time);
+double dv_x_dt(const double &time) {
+    return -pow(angularSpeed, 2) * cos(angularSpeed * time);
 }
 
 //function to calculate angular speed along y at a given time
-double dy_dt(const double angularSpeed, const double time)
-{
-    return angularSpeed * cos(angularSpeed*time);
+double dy_dt( const double &time) {
+    return angularSpeed * cos(angularSpeed * time);
 }
 
 //function to calculate angular acceleration
-double dv_y_dt(const double angularSpeed, const double time)
-{
-    return -pow(angularSpeed,2) * sin(angularSpeed*time);
+double dv_y_dt(const double &time) {
+    return -pow(angularSpeed, 2) * sin(angularSpeed * time);
 }
 
 
 typedef struct Coordinata {
-  double x, y, v_x, v_y, R;
+    double x, y, v_x, v_y, R;
 } Coordinata;
 
 
-std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angolare, const double dt, const size_t nsteps)
-{
-  std::vector<Coordinata> coordinate_evolute;
-  coordinate_evolute.push_back(coordinata);
+std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angolare, const double dt,
+                              const size_t nsteps) {
+    std::vector<Coordinata> coordinate_evolute;
+    coordinate_evolute.push_back(coordinata);
 
-  Coordinata coordinata_evoluta;
-
-  for (size_t n = 1; n < nsteps; n++)
-  {
-    coordinata_evoluta.x = coordinate_evolute.at(n - 1).x + 1;
-    coordinata_evoluta.y = coordinate_evolute.at(n - 1).y + 1;
-    coordinata_evoluta.R = sqrt(pow(coordinata.x,2) + pow(coordinata.y,2));
-    coordinate_evolute.push_back(coordinata_evoluta);
-  }
-  return coordinate_evolute;
+    Coordinata coordinata_evoluta;
+    double time = 0;
+    double (*speedFunctionX)(const double &) = &dx_dt;
+    for (size_t n = 1; n < nsteps; n++) {
+        double time2 = time + dt;
+        Coordinata previusCoordinate = coordinate_evolute.at(n - 1);
+        coordinata_evoluta.x = previusCoordinate.x + rectangle(time,time2,10,speedFunctionX);
+        coordinata_evoluta.y = previusCoordinate.y + 1;
+        coordinata_evoluta.v_x = previusCoordinate.v_x + 1;
+        coordinata_evoluta.v_y = previusCoordinate.v_y + 1;
+        coordinata_evoluta.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
+        coordinate_evolute.push_back(coordinata_evoluta);
+        time = time2;
+    }
+    return coordinate_evolute;
 }
 
 
+int main(void) {
+    Coordinata coordinata;
+    size_t nsteps = 1000;
+    double dt = 0.01;
 
+    coordinata.x = 1.0;
+    coordinata.y = 0;
+    coordinata.v_x = 0;
+    coordinata.v_y = 1.0;
+    coordinata.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
 
-int main(void)
-{
-  Coordinata coordinata;
-  size_t nsteps = 1000;
-  double dt = 0.01;
-    //angular speed
-  double u = 6.28;
+    std::vector<Coordinata> coordinate_evolute = euler(coordinata, angularSpeed, dt, nsteps);
 
-  coordinata.x = 1.0;
-  coordinata.y = 0;
-  coordinata.v_x = 0;
-  coordinata.v_y = 1.0;
-  coordinata.R = sqrt(pow(coordinata.x,2) + pow(coordinata.y,2));
+    for (size_t i = 0; i < coordinate_evolute.size(); i++)
+        std::cout << coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R <<
+        std::endl;
 
-  std::vector<Coordinata> coordinate_evolute = euler(coordinata, u, dt, nsteps);
-
-  for (size_t i = 0; i < coordinate_evolute.size(); i++)
-    std::cout << coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R << std::endl;
-
-  return 0;
+    return 0;
 }
 
 
