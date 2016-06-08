@@ -15,7 +15,7 @@ double rectangle(double leftExtreme, double rightExtreme, int numberOfSegments,
     //for the numberOfSegments
     for (int i = 0; i < numberOfSegments; i++) {
         //determine the x-cordinate, left-bottom vertex of the rectangle
-        double leftBottomVertexPosition = leftExtreme + (rectancleBase * i);
+        double leftBottomVertexPosition = (leftExtreme + (rectancleBase * i))/2;
         //determine the area of the rectangle
         sum += rectancleBase * functionToIntegrate(leftBottomVertexPosition);
     }

@@ -41,7 +41,7 @@ quanto piu` grande sara` il dt impostato nel problema)
 */
 
 //angular speed
-#define angularSpeed 6.28
+#define angularSpeed 3.14
 
 
 //function to calculate angular speed along x at a given time
@@ -85,10 +85,10 @@ std::vector<Coordinata> euler(const Coordinata &coordinata, const double u_angol
     for (size_t n = 1; n < nsteps; n++) {
         double time2 = time + dt;
         Coordinata previusCoordinate = coordinate_evolute.at(n - 1);
-        coordinata_evoluta.x = previusCoordinate.x + rectangle(time, time2, 1, speedFunctionX);
-        coordinata_evoluta.y = previusCoordinate.y + rectangle(time, time2, 1, speedFunctionY);;
-        coordinata_evoluta.v_x = previusCoordinate.v_x + rectangle(time, time2, 100, accellerationFunctionX);
-        coordinata_evoluta.v_y = previusCoordinate.v_y + rectangle(time, time2, 100, accellerationFunctionY);
+        coordinata_evoluta.x = previusCoordinate.x + trapezoidal(time, time2, 100, speedFunctionX);
+        coordinata_evoluta.y = previusCoordinate.y + trapezoidal(time, time2, 100, speedFunctionY);;
+        coordinata_evoluta.v_x = previusCoordinate.v_x + trapezoidal(time, time2, 100, accellerationFunctionX);
+        coordinata_evoluta.v_y = previusCoordinate.v_y + trapezoidal(time, time2, 100, accellerationFunctionY);
         coordinata_evoluta.R = sqrt(pow(coordinata.x, 2) + pow(coordinata.y, 2));
         coordinate_evolute.push_back(coordinata_evoluta);
         time = time2;
@@ -118,6 +118,7 @@ int main(void) {
         for (size_t i = 0; i < coordinate_evolute.size(); i++)
             outputFile <<
             coordinate_evolute[i].x << "\t" << coordinate_evolute[i].y << "\t" << coordinate_evolute[i].R
+            << "\t" << coordinate_evolute[i].v_x << "\t" << coordinate_evolute[i].v_y
             << std::endl;
     }
     outputFile.close();

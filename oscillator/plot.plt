@@ -1,9 +1,8 @@
 #!/gnuplot
 FILE_IN='traiettoria.txt'
-FILE_OUT='confronto.png'
-set terminal pngcairo
+FILE_OUT='output.png'
+set terminal png size 1000,1000
 set output FILE_OUT
 set xlabel 'x' 
 set ylabel 'y'
-set pointsize 0.2
-plot FILE_IN u 1:2 w points pt 7 lc rgb 'blue' lw 3 t 'eulero'
+plot FILE_IN using 1:2 with lines linecolor rgb 'blue' linewidth 0.1 title 'uniform circular motion'
