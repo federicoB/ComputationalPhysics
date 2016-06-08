@@ -15,7 +15,7 @@ double rectangle(double leftExtreme, double rightExtreme, int numberOfSegments,
     //for the numberOfSegments
     for (int i = 0; i < numberOfSegments; i++) {
         //determine the x-cordinate, left-bottom vertex of the rectangle
-        double leftBottomVertexPosition = (leftExtreme + (rectancleBase * i))/2;
+        double leftBottomVertexPosition = (leftExtreme + (rectancleBase * i)) / 2;
         //determine the area of the rectangle
         sum += rectancleBase * functionToIntegrate(leftBottomVertexPosition);
     }
@@ -37,7 +37,8 @@ double trapezoidal(double leftExtreme, double rightExtreme, int numberOfSegments
         //determine the position of the bottom-right verted of the trapezoid
         double bottomRightVertex = leftExtreme + (trapezoidBase * (i + 1));
         //determine the area with the forumala: ((small base + big base)*height)/2
-        double area = ((functionToIntegrate(bottomLeftVertex) + functionToIntegrate(bottomRightVertex)) * trapezoidBase) / 2;
+        double area =
+                ((functionToIntegrate(bottomLeftVertex) + functionToIntegrate(bottomRightVertex)) * trapezoidBase) / 2;
         //increase the sum of the areas
         sum += area;
     }
