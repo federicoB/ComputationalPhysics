@@ -11,5 +11,5 @@ set output FILE_OUT
 set xlabel 'x' 
 #set the mane of the y axis
 set ylabel 'y'
-#plot reading input file and using colum 1 and 2 of point, create a blue line with those points
+#plot reading input file and using column 1 and 2 of point, create a blue line with those points
 plot FILE_IN using 1:2 with lines linecolor rgb 'blue' linewidth 0.1 title 'uniform circular motion'

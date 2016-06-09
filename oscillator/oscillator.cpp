@@ -9,7 +9,7 @@
 #include "../integrator/integrationMethods.h"
 
 
-//The purpouse of this program is to make a simple application of integration mothods and test the precision of them.
+//The purpose of this program is to make a simple application of integration methods and test the precision of them.
 
 /*
 Immaginiamo il problema di tracciare una particella in moto circolare uniforme, circonferenza di raggio unitario.
@@ -33,8 +33,8 @@ y'' = -u*u * sin(u*t) = -y
 
 In questo problema, impostiamo le condizioni iniziali x(0), y(0), v_x(0) e v_y(0), creiamo una struttura nella quale immagazzinare
 x, y, v_x e v_y, prepariamo delle funzioni che, data la struttura precedente e un intervallo dt prefissato, ci restituiscano
-la struttura evoluta di quella in input e, ad ogni timestamp, scriviamo su un file questi dati intabellati (scegliete
-il formato preferito, consiglio un banale file di testo a colonne per usare python/gnuplot per plottare poi i punti e vederne il comportamento)
+la struttura evoluta di quella in input e, ad ogni timestamp, scriviamo su un file questi dati in tabella (scegliete
+il formato preferito, consiglio un banale file di testo a colonne per usare python/gnuplot per creare grafici poi i punti e vederne il comportamento)
 
 x   y   v_x   v_y   R
 
@@ -56,7 +56,7 @@ double dx_dt(const double &time) //derivata
     return -angularSpeed * sin(angularSpeed * time);
 }
 
-//function to calculare angular acceleration along x at a given time
+//function to calcolare angular acceleration along x at a given time
 double dv_x_dt(const double &time) {
     return -pow(angularSpeed, 2) * cos(angularSpeed * time);
 }
@@ -72,18 +72,18 @@ double dv_y_dt(const double &time) {
 }
 
 
-typedef struct Coordinate {
+struct Coordinate {
     double x, y, v_x, v_y, R;
-} Coordinata;
+};
 
 
-std::vector<Coordinate> euler(const Coordinate &initialCoordinate, const double u_angolare, const double deltaT,
+std::vector<Coordinate> euler(const Coordinate &initialCoordinate, const double deltaT,
                               const size_t nsteps) {
-    //a vector for cointaing next coordinates
+    //a vector for cointainig next coordinates
     std::vector<Coordinate> coordinate_evolute;
     //add the initial coordinate as first element of the vector
     coordinate_evolute.push_back(initialCoordinate);
-    //declare a Coordinate variabile for cointaing data about next coordinates
+    //declare a Coordinate variabile for cointainig data about next coordinates
     Coordinate nextCoordinate;
     //set the initial time to 0
     double time = 0;
@@ -91,25 +91,25 @@ std::vector<Coordinate> euler(const Coordinate &initialCoordinate, const double 
     double (*speedFunctionX)(const double &) = &dx_dt;
     //get the address of the speedFunctionY into a function pointer
     double (*speedFunctionY)(const double &) = &dy_dt;
-    //get the address of the accellerationFunctionX into a function pointer
-    double (*accellerationFunctionX)(const double &) = &dv_x_dt;
-    //get the address of the accellerationFunctionY into a function pointer
-    double (*accellerationFunctionY)(const double &) = dv_y_dt;
+    //get the address of the accelerationFunctionX into a function pointer
+    double (*accelerationFunctionX)(const double &) = &dv_x_dt;
+    //get the address of the accelerationFunctionY into a function pointer
+    double (*accelerationFunctionY)(const double &) = dv_y_dt;
     //for each step
     for (size_t n = 1; n < nsteps; n++) {
         //calculate next time step
         double time2 = time + deltaT;
         //get the previous coordinate
-        Coordinate previusCoordinate = coordinate_evolute.at(n - 1);
+        Coordinate previousCoordinate = coordinate_evolute.at(n - 1);
         //for the calculation of the next values i used an inverse formula of the Fundamental theorem of calculus
         //calculate the next coordinate x position.
-        nextCoordinate.x = previusCoordinate.x + trapezoidal(time, time2, 100, speedFunctionX);
+        nextCoordinate.x = previousCoordinate.x + trapezoidal(time, time2, 100, speedFunctionX);
         //calculate the next coordinate y position.
-        nextCoordinate.y = previusCoordinate.y + trapezoidal(time, time2, 100, speedFunctionY);
+        nextCoordinate.y = previousCoordinate.y + trapezoidal(time, time2, 100, speedFunctionY);
         //calculate the next coordinate x speed.
-        nextCoordinate.v_x = previusCoordinate.v_x + trapezoidal(time, time2, 100, accellerationFunctionX);
+        nextCoordinate.v_x = previousCoordinate.v_x + trapezoidal(time, time2, 100, accelerationFunctionX);
         //calculate the next coordinate y speed.
-        nextCoordinate.v_y = previusCoordinate.v_y + trapezoidal(time, time2, 100, accellerationFunctionY);
+        nextCoordinate.v_y = previousCoordinate.v_y + trapezoidal(time, time2, 100, accelerationFunctionY);
         //calculate the radius of the next coordinate, this is useful for examining the deviation
         nextCoordinate.R = sqrt(pow(nextCoordinate.x, 2) + pow(nextCoordinate.y, 2));
         //add the new coordinate to the vector
@@ -133,7 +133,7 @@ int main(void) {
     //calculate the radius of the initial coordinate
     initialCoordinate.R = sqrt(pow(initialCoordinate.x, 2) + pow(initialCoordinate.y, 2));
     //calculate the next coordinates
-    std::vector<Coordinate> coordinate_evolute = euler(initialCoordinate, angularSpeed, dt, numberOfSteps);
+    std::vector<Coordinate> coordinate_evolute = euler(initialCoordinate, dt, numberOfSteps);
     //create an output stream to a file
     std::ofstream outputFile("traiettoria.txt");
     //if the file exist and is opened
