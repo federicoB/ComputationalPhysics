@@ -6,7 +6,7 @@
 #include "integrationMethods.h"
 
 /**
- * An example funtion to integrate.
+ * An example function to integrate.
  */
 double f(const double &x) {
     //sample function
@@ -26,7 +26,7 @@ int main() {
         double truth = 1 - cos(1);
         //create a legend for the output file
         outputFile << "A   \t B\t\t\tC" << std::endl;
-        //loop for varius number of segments
+        //loop for various number of segments
         for (int n = 1; n < 100; n++) {
             //increase exponentially the number of segments
             int N = n * n;

@@ -8,16 +8,16 @@
 
 double rectangle(double leftExtreme, double rightExtreme, int numberOfSegments,
                  double (*functionToIntegrate)(const double &)) {
-    //declare a variable sum for containg the sum of the areas of the rectangles
+    //declare a variable sum for containing the sum of the areas of the rectangles
     double sum = 0;
-    //determine the rectangble base subdividing the leght of the interval for the desired numberOfSegments
-    double rectancleBase = (rightExtreme - leftExtreme) / numberOfSegments;
+    //determine the rectangle base subdividing the length of the interval for the desired numberOfSegments
+    double rectangleBase = (rightExtreme - leftExtreme) / numberOfSegments;
     //for the numberOfSegments
     for (int i = 0; i < numberOfSegments; i++) {
-        //determine the x-cordinate, left-bottom vertex of the rectangle
-        double leftBottomVertexPosition = (leftExtreme + (rectancleBase * i)) / 2;
+        //determine the x-coordinate, left-bottom vertex of the rectangle
+        double leftBottomVertexPosition = (leftExtreme + (rectangleBase * i)) / 2;
         //determine the area of the rectangle
-        sum += rectancleBase * functionToIntegrate(leftBottomVertexPosition);
+        sum += rectangleBase * functionToIntegrate(leftBottomVertexPosition);
     }
     //return the calculated sum
     return sum;
@@ -26,17 +26,17 @@ double rectangle(double leftExtreme, double rightExtreme, int numberOfSegments,
 
 double trapezoidal(double leftExtreme, double rightExtreme, int numberOfSegments,
                    double (*functionToIntegrate)(const double &)) {
-    //declare a variable sum for containg the sum of the areas of the traperzoids
+    //declare a variable sum for containing the sum of the areas of the trapezoids
     double sum = 0.0;
-    //determine the trapezoid base subdividing the leght of the interval for the desired numberOfSegments
+    //determine the trapezoid base subdividing the length of the interval for the desired numberOfSegments
     double trapezoidBase = (rightExtreme - leftExtreme) / numberOfSegments;
     //for all the numberOfSegments
     for (int i = 0; i < numberOfSegments; i++) {
         //determine the position of the bottom-left vertex of the trapezoid
         double bottomLeftVertex = leftExtreme + (trapezoidBase * i);
-        //determine the position of the bottom-right verted of the trapezoid
+        //determine the position of the bottom-right vertex of the trapezoid
         double bottomRightVertex = leftExtreme + (trapezoidBase * (i + 1));
-        //determine the area with the forumala: ((small base + big base)*height)/2
+        //determine the area with the formula: ((small base + big base)*height)/2
         double area =
                 ((functionToIntegrate(bottomLeftVertex) + functionToIntegrate(bottomRightVertex)) * trapezoidBase) / 2;
         //increase the sum of the areas
@@ -50,19 +50,17 @@ double trapezoidal(double leftExtreme, double rightExtreme, int numberOfSegments
 
 double simpson(double leftExtreme, double rightExtreme, int numberOfSegments,
                double (*functionToIntegrate)(const double &)) {
-    //declare a variable sum for containg the sum of the areas of the parabola
+    //declare a variable sum for containing the sum of the areas of the parabola
     double sum = 0.0;
-    //determine the segmentLenght base subdividing the leght of the interval for the desired numberOfSegments
-    double segmentLeght = (rightExtreme - leftExtreme) / numberOfSegments;
-    bool even = false;
-    double point = leftExtreme;
+    //determine the segment length base subdividing the length of the interval for the desired numberOfSegments
+    double segmentLength = (rightExtreme - leftExtreme) / numberOfSegments;
     //for all the numberOfSegments
     for (int i = 1; i < numberOfSegments / 2; i++) {
-        double point1 = leftExtreme + segmentLeght * ((2 * i) - 2);
-        double point2 = leftExtreme + segmentLeght * ((2 * i) - 1);
-        double point3 = leftExtreme + segmentLeght * ((2 * i));
+        double point1 = leftExtreme + segmentLength * ((2 * i) - 2);
+        double point2 = leftExtreme + segmentLength * ((2 * i) - 1);
+        double point3 = leftExtreme + segmentLength * ((2 * i));
         sum += functionToIntegrate(point1) + 4 * functionToIntegrate(point2) + functionToIntegrate(point3);
     }
-    sum = sum * (segmentLeght / 3);
+    sum = sum * (segmentLength / 3);
     return sum;
 }
