@@ -8,6 +8,9 @@ function init() {
     var waterGraphic = new Pool();
     var waterShape = new createjs.Shape(waterGraphic);
     view.stage.addChild(waterShape);
+    var boxGraphic = new Box();
+    var boxShape = new createjs.Shape(boxGraphic);
+    view.stage.addChild(boxShape);
 }
 
 class Controller {
