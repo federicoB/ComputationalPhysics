@@ -2,15 +2,16 @@ function init() {
     view = new View("canvas");
     createjs.Ticker.addEventListener("tick",Controller.tick);
     createjs.Ticker.framerate=30;
-    var groundGraphic = new Ground();
+    var groundGraphic = new GroundGraphic();
     var groundShape = new createjs.Shape(groundGraphic);
-    view.stage.addChild(groundShape);
-    var waterGraphic = new Pool();
+    view.addChild(groundShape);
+    var waterGraphic = new PoolGraphic();
     var waterShape = new createjs.Shape(waterGraphic);
-    view.stage.addChild(waterShape);
-    var boxGraphic = new Box();
+    view.addChild(waterShape);
+    var boxGraphic = new BoxGraphic();
     var boxShape = new createjs.Shape(boxGraphic);
-    view.stage.addChild(boxShape);
+    view.addChild(boxShape);
+    var gravitationalForce = new Vector(270,9,8);
 }
 
 class Controller {

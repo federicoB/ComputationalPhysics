@@ -1,7 +1,7 @@
-class View {
+class View extends createjs.Stage {
     constructor(canvasID) {
+        super(canvasID);
         this.canvas = document.getElementById(canvasID);
-        this.stage = new createjs.Stage(canvasID);
         this.updateDimensions();
     }
     updateDimensions() {
@@ -12,7 +12,7 @@ class View {
     }
 }
 
-class Ground extends createjs.Graphics {
+class GroundGraphic extends createjs.Graphics {
     constructor() {
         super();
         var width = view.width;
@@ -38,7 +38,7 @@ class Ground extends createjs.Graphics {
     }
 }
 
-class Pool extends createjs.Graphics {
+class PoolGraphic extends createjs.Graphics {
     constructor() {
         super();
         var width = view.width;
@@ -48,11 +48,13 @@ class Pool extends createjs.Graphics {
     }
 }
 
-class Box extends createjs.Graphics {
-    constructor() {
-        super();
-        var width = view.width;
-        var height = view.height;
-        this.beginFill("#993300").drawRect(width/2,height/3,width/50,width/50);
+class BoxGraphic extends createjs.Graphics {
+    constructor(density) {
+        super(density);
+        var startPositionX = view.width/2;
+        var startPositionY = view.height/3;
+        this.width = view.width/50;
+        this.heigth = view.width/50;
+        this.beginFill("#993300").drawRect(startPositionX,startPositionY,this.width,this.height);
     }
 }
