@@ -8,10 +8,8 @@ function init() {
     var waterGraphic = new PoolGraphic();
     var waterShape = new createjs.Shape(waterGraphic);
     view.addChild(waterShape);
-    var boxGraphic = new BoxGraphic();
-    var boxShape = new createjs.Shape(boxGraphic);
-    view.addChild(boxShape);
-    var gravitationalForce = new Vector(270,9,8);
+    var box = new Box();
+    view.addChild(box);
 }
 
 class Controller {
@@ -19,4 +17,40 @@ class Controller {
         view.updateDimensions();
         view.stage.update();
     }
+}
+
+class View extends createjs.Stage {
+    constructor(canvasID) {
+        super(canvasID);
+        this.canvas = document.getElementById(canvasID);
+        this.updateDimensions();
+    }
+    updateDimensions() {
+        this.width = document.body.clientWidth;
+        this.height = document.body.clientHeight;
+        this.canvas.setAttribute("width",this.width+"px");
+        this.canvas.setAttribute("height",this.height+"px");
+    }
+}
+
+class Vector {
+    constructor(direction,module) {
+        this.direction = direction;
+        this.module = module;
+    }
+
+    static createFromComponents(x,y) {
+        var module = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+        var direction = Math.atan2(y,x);
+        return new Vector(direction,module);
+    }
+
+    getXcomponent() {
+        return Math.cos(this.direction)*this.module;
+    }
+
+    getYComponent() {
+        return Math.sen(this.direction)*this.module;
+    }
+
 }

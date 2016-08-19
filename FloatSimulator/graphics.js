@@ -1,16 +1,4 @@
-class View extends createjs.Stage {
-    constructor(canvasID) {
-        super(canvasID);
-        this.canvas = document.getElementById(canvasID);
-        this.updateDimensions();
-    }
-    updateDimensions() {
-        this.width = document.body.clientWidth;
-        this.height = document.body.clientHeight;
-        this.canvas.setAttribute("width",this.width+"px");
-        this.canvas.setAttribute("height",this.height+"px");
-    }
-}
+//this class contain all the children of the superclass createjs.Graphics
 
 class GroundGraphic extends createjs.Graphics {
     constructor() {
@@ -49,12 +37,8 @@ class PoolGraphic extends createjs.Graphics {
 }
 
 class BoxGraphic extends createjs.Graphics {
-    constructor(density) {
-        super(density);
-        var startPositionX = view.width/2;
-        var startPositionY = view.height/3;
-        this.width = view.width/50;
-        this.heigth = view.width/50;
-        this.beginFill("#993300").drawRect(startPositionX,startPositionY,this.width,this.height);
+    constructor(x,y,width,heigth) {
+        super();
+        this.beginFill("#993300").drawRect(x,y,width,heigth);
     }
 }
