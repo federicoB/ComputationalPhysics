@@ -9,13 +9,17 @@ function init() {
     var waterShape = new createjs.Shape(waterGraphic);
     view.addChild(waterShape);
     var box = new Box();
-    view.addChild(box);
+    view.addChildAt(box,2);
 }
 
 class Controller {
-    static tick() {
+    static tick(event) {
         view.updateDimensions();
-        view.stage.update();
+        view.update();
+        var box = view.getChildAt(2);
+        if (box!=undefined) {
+            box.move(event.delta / 1000);
+        }
     }
 }
 
@@ -45,12 +49,12 @@ class Vector {
         return new Vector(direction,module);
     }
 
-    getXcomponent() {
+    getXComponent() {
         return Math.cos(this.direction)*this.module;
     }
 
     getYComponent() {
-        return Math.sen(this.direction)*this.module;
+        return Math.sin(this.direction)*this.module;
     }
 
 }
