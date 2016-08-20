@@ -29,10 +29,12 @@ class GroundGraphic extends createjs.Graphics {
 class PoolGraphic extends createjs.Graphics {
     constructor() {
         super();
-        var width = view.width;
-        var height = view.height;
+        this.x = 0;
+        this.y= 0;
+        this.width = view.width/3;
+        this.height = view.height/2 + view.height/10;
         this.beginFill("#00ccff")
-            .drawRect(width / 3, height / 2 + height / 20, width / 3, height / 2 - height / 10);
+            .drawRect(this.x,this.y,this.width,this.height);
     }
 }
 

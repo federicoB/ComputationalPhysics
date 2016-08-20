@@ -51,4 +51,22 @@ class Box extends DynamicObject {
         var weigth = mass * 2;
         return new Vector(270,weigth);
     }
+    getCollisionBox() {
+
+    }
+}
+
+class Pool extends createjs.Shape {
+    constructor() {
+        var poolGraphic = new PoolGraphic();
+        super(poolGraphic);
+        this.x = view.width/3;
+        this.y= view.height/2 + view.height/20;
+        this.graphics = poolGraphic;
+    }
+
+    getCollisionBox() {
+        var graphic = this.graphics;
+        return new SAT.Box(new SAT.Vector(graphic.x,graphic.y),graphic.width,graphic.height);
+    }
 }

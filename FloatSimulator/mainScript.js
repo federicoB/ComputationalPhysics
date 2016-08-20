@@ -5,9 +5,8 @@ function init() {
     var groundGraphic = new GroundGraphic();
     var groundShape = new createjs.Shape(groundGraphic);
     view.addChild(groundShape);
-    var waterGraphic = new PoolGraphic();
-    var waterShape = new createjs.Shape(waterGraphic);
-    view.addChild(waterShape);
+    var water = new Pool();
+    view.addChild(water);
     var box = new Box();
     view.addChildAt(box,2);
 }
@@ -19,7 +18,12 @@ class Controller {
         var box = view.getChildAt(2);
         if (box!=undefined) {
             box.move(event.delta / 1000);
+
+            if (intersection!=null) {
+                console.log("intersection");
+            }
         }
+
     }
 }
 
