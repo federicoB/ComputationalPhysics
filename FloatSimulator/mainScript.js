@@ -1,29 +1,36 @@
 function init() {
     view = new View("canvas");
-    createjs.Ticker.addEventListener("tick",Controller.tick);
-    createjs.Ticker.framerate=30;
+    createjs.Ticker.addEventListener("tick", Controller.tick);
+    createjs.Ticker.framerate = 30;
     var groundGraphic = new GroundGraphic();
     var groundShape = new createjs.Shape(groundGraphic);
     view.addChild(groundShape);
     var water = new Pool();
     view.addChild(water);
     var box = new Box();
-    view.addChildAt(box,2);
+    view.addChildAt(box, 2);
 }
 
 class Controller {
     static tick(event) {
         view.updateDimensions();
-        view.update();
         var box = view.getChildAt(2);
-        if (box!=undefined) {
-            box.move(event.delta / 1000);
-
-            if (intersection!=null) {
-                console.log("intersection");
-            }
+        var pool = view.getChildAt(1);
+        var response = new SAT.Response();
+        var collided = SAT.testPolygonPolygon(box.getCollisionPolygon(),pool.getCollisionPolygon(),response);
+        var overlap = 0, area = 0;
+        if (collided) {
+            overlap = response.overlap;
+            if (overlap>box.graphics.height) overlap = box.graphics.height;
+            console.log("overlap is "+overlap+" while box height is "+box.graphics.height);
+            area = Math.round(overlap * box.graphics.width);
+            box.setForce("buoyancy",pool.calculateBuoyancyForce(area));
+        } else {
+            box.removeForce("buoyancy");
         }
-
+        pool.increaseHeight(area/pool.graphics.width);
+        box.move(event.delta / 1000);
+        view.update();
     }
 }
 
@@ -33,32 +40,33 @@ class View extends createjs.Stage {
         this.canvas = document.getElementById(canvasID);
         this.updateDimensions();
     }
+
     updateDimensions() {
         this.width = document.body.clientWidth;
         this.height = document.body.clientHeight;
-        this.canvas.setAttribute("width",this.width+"px");
-        this.canvas.setAttribute("height",this.height+"px");
+        this.canvas.setAttribute("width", this.width + "px");
+        this.canvas.setAttribute("height", this.height + "px");
     }
 }
 
 class Vector {
-    constructor(direction,module) {
+    constructor(direction, module) {
         this.direction = direction;
         this.module = module;
     }
 
-    static createFromComponents(x,y) {
-        var module = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-        var direction = Math.atan2(y,x);
-        return new Vector(direction,module);
+    static createFromComponents(x, y) {
+        var module = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        var direction = Math.atan2(y, x);
+        return new Vector(direction, module);
     }
 
     getXComponent() {
-        return Math.cos(this.direction)*this.module;
+        return Math.cos(this.direction) * this.module;
     }
 
     getYComponent() {
-        return Math.sin(this.direction)*this.module;
+        return Math.sin(this.direction) * this.module;
     }
 
 }

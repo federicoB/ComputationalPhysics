@@ -27,20 +27,20 @@ class GroundGraphic extends createjs.Graphics {
 }
 
 class PoolGraphic extends createjs.Graphics {
-    constructor() {
+    constructor(height) {
         super();
-        this.x = 0;
-        this.y= 0;
         this.width = view.width/3;
-        this.height = view.height/2 + view.height/10;
+        this.height = height;
         this.beginFill("#00ccff")
-            .drawRect(this.x,this.y,this.width,this.height);
+            .drawRect(0,0,this.width,this.height);
     }
 }
 
 class BoxGraphic extends createjs.Graphics {
-    constructor(x,y,width,heigth) {
+    constructor(width,height) {
         super();
-        this.beginFill("#993300").drawRect(x,y,width,heigth);
+        this.width = width;
+        this.height = height;
+        this.beginFill("#993300").drawRect(0,0,width,height);
     }
 }
