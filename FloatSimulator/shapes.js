@@ -28,7 +28,6 @@ class DynamicObject extends createjs.Shape {
     getComputeForces() {
         var returnVectorX = 0, returnVectorY = 0;
         for (var key in this.listOfForces) {
-            console.log(key + " force y component is " + this.listOfForces[key].getYComponent());
             returnVectorX += Math.round(this.listOfForces[key].getXComponent());
             returnVectorY += Math.round(this.listOfForces[key].getYComponent());
         }
@@ -38,15 +37,11 @@ class DynamicObject extends createjs.Shape {
 
     move(time) {
         var force = this.getComputeForces();
-        console.log("resultant force = " + force.getYComponent());
         this.accelleration.direction = force.direction;
         this.accelleration.module = force.module / 3;
-        console.log("vertical accelleration "+this.accelleration.getYComponent());
         this.speed = Vector.createFromComponents(this.speed.getXComponent() + this.accelleration.getXComponent() * time,
             this.speed.getYComponent() + this.accelleration.getYComponent() * time);
-        console.log("vertical speed "+this.speed.getYComponent()+"vertical accelleration contribution"+this.accelleration.getYComponent()*time);
         //the *-1 is because in computer graphics the y axe is reversed
-        console.log("add to y "+(this.speed.getYComponent() * -1) * time + 1 / 2 * (this.accelleration.getYComponent() * -1) * Math.pow(time, 2));
         this.y += (this.speed.getYComponent() * -1) * time + 1 / 2 * (this.accelleration.getYComponent() * -1) * Math.pow(time, 2);
     }
 
