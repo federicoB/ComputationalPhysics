@@ -22,8 +22,7 @@ class Controller {
         if (collided) {
             overlap = response.overlap;
             if (overlap>box.graphics.height) overlap = box.graphics.height;
-            console.log("overlap is "+overlap+" while box height is "+box.graphics.height);
-            area = Math.round(overlap * box.graphics.width);
+            area = overlap * box.graphics.width;
             box.setForce("buoyancy",pool.calculateBuoyancyForce(area));
         } else {
             box.removeForce("buoyancy");

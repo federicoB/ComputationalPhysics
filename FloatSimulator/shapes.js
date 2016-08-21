@@ -103,7 +103,7 @@ class Pool extends DynamicObject {
     }
 
     increaseHeight(height) {
-        this.graphic = new PoolGraphic(this.baseHeight + height);
+        this.graphics.setHeight(this.baseHeight + height);
         this.y = this.baseY - height;
     }
 }

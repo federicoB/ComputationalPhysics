@@ -31,8 +31,12 @@ class PoolGraphic extends createjs.Graphics {
         super();
         this.width = view.width/3;
         this.height = height;
-        this.beginFill("#00ccff")
-            .drawRect(0,0,this.width,this.height);
+        this.drawcommand = this.beginFill("#00ccff")
+            .drawRect(0,0,this.width,this.height).command;
+    }
+    setHeight(height) {
+        this.drawcommand.h = height;
+        this.height = height;
     }
 }
 
