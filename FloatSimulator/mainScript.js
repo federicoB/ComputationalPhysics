@@ -1,7 +1,12 @@
+/**
+ * First function of the program.
+ */
 function init() {
-    view = new View("canvas");
+    var canvasId = "canvas";
+    view = new View(canvasId);
     createjs.Ticker.addEventListener("tick", Controller.tick);
     createjs.Ticker.framerate = 30;
+    world = new World();
     var groundGraphic = new GroundGraphic();
     var groundShape = new createjs.Shape(groundGraphic);
     view.addChild(groundShape);
@@ -68,4 +73,10 @@ class Vector {
         return Math.sin(this.direction) * this.module;
     }
 
+}
+
+class World {
+    constructor() {
+        this.gravitationalAcceleration = 9.8;
+    }
 }

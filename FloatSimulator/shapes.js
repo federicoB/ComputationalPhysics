@@ -1,4 +1,4 @@
-//this class contain all the children of the superclass createjs.Shape
+//this file contain all the children of the superclass createjs.Shape
 
 class DynamicObject extends createjs.Shape {
     constructor(density, graphic) {
@@ -38,7 +38,7 @@ class DynamicObject extends createjs.Shape {
     move(time) {
         var force = this.getComputeForces();
         this.accelleration.direction = force.direction;
-        this.accelleration.module = force.module / 3;
+        this.accelleration.module = force.module / world.gravitationalAcceleration;
         this.speed = Vector.createFromComponents(this.speed.getXComponent() + this.accelleration.getXComponent() * time,
             this.speed.getYComponent() + this.accelleration.getYComponent() * time);
         //the *-1 is because in computer graphics the y axe is reversed
@@ -73,7 +73,7 @@ class Box extends DynamicObject {
     getWeight() {
         var area = this.graphics.width * this.graphics.height;
         var mass = area * this.density;
-        var weigth = mass * 3;
+        var weigth = mass * world.gravitationalAcceleration;
         return new Vector((Math.PI * 3) / 2, weigth);
     }
 }
@@ -93,7 +93,7 @@ class Pool extends DynamicObject {
 
     calculateBuoyancyForce(area) {
         var mass = area * this.density;
-        var weight = mass * 3;
+        var weight = mass * world.gravitationalAcceleration;
         return new Vector(Math.PI / 2, weight);
     }
 

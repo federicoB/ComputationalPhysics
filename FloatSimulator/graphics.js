@@ -1,4 +1,4 @@
-//this class contain all the children of the superclass createjs.Graphics
+//this file contain all the children of the superclass createjs.Graphics
 
 class GroundGraphic extends createjs.Graphics {
     constructor() {
