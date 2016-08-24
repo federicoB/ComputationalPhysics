@@ -2,17 +2,29 @@
  * First function of the program.
  */
 function init() {
+    //set the id of the canvas element of the page
     var canvasId = "canvas";
+    //create a new view object
     view = new View(canvasId);
+    //setup the ticker function
     createjs.Ticker.addEventListener("tick", Controller.tick);
+    //set the framerate to 30. Now the ticker function is called 30 times a seconds.
     createjs.Ticker.framerate = 30;
+    //create the world object
     world = new World();
+    //create a new graphic for the ground
     var groundGraphic = new GroundGraphic();
+    //set the created graphic to a shape for the ground
     var groundShape = new createjs.Shape(groundGraphic);
+    //add the shape of the ground to the view
     view.addChild(groundShape);
+    //create a new pool
     var water = new Pool();
+    //add it to the view
     view.addChild(water);
+    //create a new box
     var box = new Box();
+    //add it to the view
     view.addChildAt(box, 2);
 }
 
