@@ -1,3 +1,7 @@
+
+//declare a global variable view and world.
+var view,world;
+
 /**
  * First function of the program.
  */
