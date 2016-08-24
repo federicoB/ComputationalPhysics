@@ -5,7 +5,7 @@ function init() {
     //set the id of the canvas element of the page
     var canvasId = "canvas";
     //create a new view object
-    view = new View(canvasId);
+    view = View.getInstance(canvasId);
     //setup the ticker function
     createjs.Ticker.addEventListener("tick", Controller.tick);
     //set the framerate to 30. Now the ticker function is called 30 times a seconds.
@@ -62,6 +62,22 @@ class View extends createjs.Stage {
         this.height = document.body.clientHeight;
         this.canvas.setAttribute("width", this.width + "px");
         this.canvas.setAttribute("height", this.height + "px");
+    }
+
+    /**
+     * get the singleton instance of the view
+     * @param canvasId: the id of the canvas element
+     * @returns {View}: the view object.
+     */
+    static getInstance (canvasId) {
+        //if the view is not yet defined
+        if (typeof view === 'undefined') {
+            //create a new view and return it
+            return new View(canvasId);
+        } else {
+            //otherwise return the already created object.
+            return view;
+        }
     }
 }
 
