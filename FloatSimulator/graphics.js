@@ -1,4 +1,4 @@
-//this file contain all the children of the superclass createjs.Graphics
+//The graphic is a virtual object, it's the design of the shape.
 
 class GroundGraphic extends createjs.Graphics {
     constructor() {
@@ -23,6 +23,33 @@ class GroundGraphic extends createjs.Graphics {
             .lineTo(0, height)
             //close the poly
             .lineTo(0, height / 2);
+    }
+    addHole(hole) {
+
+    }
+}
+
+//TODO check if this is the correct file for this class
+class GroundGraphicFactory {
+    static getDefaultInstance() {
+
+    }
+}
+
+class HoleFactory {
+    static getDefaultInstance() {
+        var width= view.width/3;
+        var height = (view.height*2)/5;
+    }
+    static getInstance(width,depth) {
+        return new Hole(width,depth);
+    }
+}
+
+class Hole {
+    constructor(width,depth) {
+        this.width = width;
+        this.depth = depth;
     }
 }
 

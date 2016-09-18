@@ -1,4 +1,4 @@
-//this file contain all the children of the superclass createjs.Shape
+//Shapes are object that are the real representation of a graphics.
 
 class DynamicObject extends createjs.Shape {
     constructor(density, graphic) {
