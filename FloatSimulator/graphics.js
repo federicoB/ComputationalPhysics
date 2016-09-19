@@ -9,7 +9,7 @@ class GroundGraphic extends createjs.Graphics {
         //call the super constructor for creating createjs.Graphics base class
         super();
         //create an empty array for cointaing the holes
-        this.holes = [];
+        this.holes = SortedList.create();
     }
     //call this when ready to draw the ground
     drawGraphic() {
@@ -63,6 +63,17 @@ class GroundGraphic extends createjs.Graphics {
      * @returns {GroundGraphic} return the ground graphic for method chaining
      */
     addHole(hole,leftMargin) {
+        //check if the hole does't overlap with an existing hole
+        var overlap = false;
+        for (holeObject of this.holes) {
+            if (leftMargin < holeObject.leftMargin) {
+                if (leftMargin+hole.depth>holeObject.leftMargin) {
+                    overlap = true;
+                }
+            } else {
+                
+            }
+        }
         this.holes.push({hole : hole,leftMargin : leftMargin});
         //TODO sort holes array or insert in right position
         return this;
