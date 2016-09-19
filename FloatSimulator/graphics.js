@@ -67,11 +67,13 @@ class GroundGraphic extends createjs.Graphics {
         var overlap = false;
         for (holeObject of this.holes) {
             if (leftMargin < holeObject.leftMargin) {
-                if (leftMargin+hole.depth>holeObject.leftMargin) {
+                if (leftMargin+hole.width>holeObject.leftMargin) {
                     overlap = true;
                 }
             } else {
-                
+                if (holeObject.leftMargin+holeObject.hole.width>leftMargin) {
+                    overlap = true;
+                }
             }
         }
         this.holes.push({hole : hole,leftMargin : leftMargin});
