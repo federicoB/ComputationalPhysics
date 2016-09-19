@@ -65,20 +65,30 @@ class GroundGraphic extends createjs.Graphics {
     addHole(hole,leftMargin) {
         //check if the hole does't overlap with an existing hole
         var overlap = false;
+        //for every holeObjects in holes array
         for (holeObject of this.holes) {
+            //if the holeToInsert is before the already inserted hole
             if (leftMargin < holeObject.leftMargin) {
+                //check if the hole to insert is not too large
                 if (leftMargin+hole.width>holeObject.leftMargin) {
+                    //if is too large set the flag overlap to true
                     overlap = true;
                 }
+                //otherwise if the hole to insert is after the already inserted hole
             } else {
+                //check if the already inserted hole is not too large
                 if (holeObject.leftMargin+holeObject.hole.width>leftMargin) {
+                    //if is too large set the flag overlap to true
                     overlap = true;
                 }
             }
         }
+        //if there is no overlap
         if (!overlap) {
+            //insert the new hole into the sortedList
             this.holes.insertOne({hole: hole, leftMargin: leftMargin});
         }
+        //return this for method chaining
         return this;
     }
 }
