@@ -76,8 +76,9 @@ class GroundGraphic extends createjs.Graphics {
                 }
             }
         }
-        this.holes.push({hole : hole,leftMargin : leftMargin});
-        //TODO sort holes array or insert in right position
+        if (!overlap) {
+            this.holes.insertOne({hole: hole, leftMargin: leftMargin});
+        }
         return this;
     }
 }
