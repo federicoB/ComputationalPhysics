@@ -17,7 +17,7 @@ function init() {
     //create the world object
     world = new World();
     //create a new graphic for the ground
-    var groundGraphic = new GroundGraphic();
+    var groundGraphic = GroundGraphicFactory.getDefaultInstance();
     //set the created graphic to a shape for the ground
     var groundShape = new createjs.Shape(groundGraphic);
     //add the shape of the ground to the view
