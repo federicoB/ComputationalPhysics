@@ -38,7 +38,7 @@ class DynamicObject extends createjs.Shape {
     move(time) {
         var force = this.getComputeForces();
         this.accelleration.direction = force.direction;
-        this.accelleration.module = force.module / world.gravitationalAcceleration;
+        this.accelleration.module = force.module / globalConstants.gravitationalAcceleration;
         this.speed = Vector.createFromComponents(this.speed.getXComponent() + this.accelleration.getXComponent() * time,
             this.speed.getYComponent() + this.accelleration.getYComponent() * time);
         //the *-1 is because in computer graphics the y axe is reversed
@@ -73,7 +73,7 @@ class Box extends DynamicObject {
     getWeight() {
         var area = this.graphics.width * this.graphics.height;
         var mass = area * this.density;
-        var weigth = mass * world.gravitationalAcceleration;
+        var weigth = mass * globalConstants.gravitationalAcceleration;
         return new Vector((Math.PI * 3) / 2, weigth);
     }
 }
@@ -93,7 +93,7 @@ class Pool extends DynamicObject {
 
     calculateBuoyancyForce(area) {
         var mass = area * this.density;
-        var weight = mass * world.gravitationalAcceleration;
+        var weight = mass * globalConstants.gravitationalAcceleration;
         return new Vector(Math.PI / 2, weight);
     }
 

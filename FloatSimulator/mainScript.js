@@ -1,6 +1,6 @@
 
-//declare a global variable view and world.
-var view,world;
+//declare a global variable view and globalConstants.
+var view,globalConstants;
 
 /**
  * First function of the program.
@@ -14,8 +14,8 @@ function init() {
     createjs.Ticker.addEventListener("tick", Controller.tick);
     //set the framerate to 30. Now the ticker function is called 30 times a seconds.
     createjs.Ticker.framerate = 30;
-    //create the world object
-    world = new World();
+    //create the globalConstants object
+    globalConstants = new GlobalConstants();
     //create a new graphic for the ground
     var groundGraphic = GroundGraphicFactory.getDefaultInstance();
     //set the created graphic to a shape for the ground
@@ -107,7 +107,7 @@ class Vector {
 
 }
 
-class World {
+class GlobalConstants {
     constructor() {
         this.gravitationalAcceleration = 9.8;
     }
