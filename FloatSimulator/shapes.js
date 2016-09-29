@@ -5,7 +5,7 @@ class DynamicObject extends createjs.Shape {
         super(graphic);
         this.density = density;
         this.listOfForces = new Array();
-        this.accelleration = new Vector(0, 0);
+        this.acceleration = new Vector(0, 0);
         this.speed = new Vector(0, 0);
     }
 
@@ -37,12 +37,12 @@ class DynamicObject extends createjs.Shape {
 
     move(time) {
         var force = this.getComputeForces();
-        this.accelleration.direction = force.direction;
-        this.accelleration.module = force.module / globalConstants.gravitationalAcceleration;
-        this.speed = Vector.createFromComponents(this.speed.getXComponent() + this.accelleration.getXComponent() * time,
-            this.speed.getYComponent() + this.accelleration.getYComponent() * time);
+        this.acceleration.direction = force.direction;
+        this.acceleration.module = force.module / globalConstants.gravitationalAcceleration;
+        this.speed = Vector.createFromComponents(this.speed.getXComponent() + this.acceleration.getXComponent() * time,
+            this.speed.getYComponent() + this.acceleration.getYComponent() * time);
         //the *-1 is because in computer graphics the y axe is reversed
-        this.y += (this.speed.getYComponent() * -1) * time + 1 / 2 * (this.accelleration.getYComponent() * -1) * Math.pow(time, 2);
+        this.y += (this.speed.getYComponent() * -1) * time + 1 / 2 * (this.acceleration.getYComponent() * -1) * Math.pow(time, 2);
     }
 
     getCollisionPolygon() {
