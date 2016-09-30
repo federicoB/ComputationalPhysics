@@ -1,0 +1,25 @@
+{
+  "name": "floatsimulator",
+  "version": "1.0.0",
+  "description": "Buoyancy simulation",
+  "main": "mainScript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/federicoB/ComputationalPhysics/tree/master/FloatSimulator"
+  },
+  "keywords": [
+    "Bouyancy",
+    "simulation",
+    "physics"
+  ],
+  "author": "Federico Bertani",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "pixi.js": "^4.0.3",
+    "sat": "^0.6.0",
+    "sortedlist": "^0.3.1"
+  }
+}
