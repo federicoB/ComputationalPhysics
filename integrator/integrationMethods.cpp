@@ -55,12 +55,12 @@ double simpson(double leftExtreme, double rightExtreme, int numberOfSegments,
     //determine the segment length base subdividing the length of the interval for the desired numberOfSegments
     double segmentLength = (rightExtreme - leftExtreme) / numberOfSegments;
     //for all the numberOfSegments
-    for (int i = 1; i < numberOfSegments / 2; i++) {
-        double point1 = leftExtreme + segmentLength * ((2 * i) - 2);
-        double point2 = leftExtreme + segmentLength * ((2 * i) - 1);
-        double point3 = leftExtreme + segmentLength * ((2 * i));
+    for (int i = 0; i <= numberOfSegments; i++) {
+        double point1 = leftExtreme + segmentLength * i;
+        double point2 = leftExtreme + segmentLength * i + segmentLength/2;
+        double point3 = leftExtreme + segmentLength * (i+1);
         sum += functionToIntegrate(point1) + 4 * functionToIntegrate(point2) + functionToIntegrate(point3);
     }
-    sum = sum * (segmentLength / 3);
+    sum = sum * (segmentLength / 6);
     return sum;
 }
